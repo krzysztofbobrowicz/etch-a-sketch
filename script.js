@@ -5,14 +5,11 @@ let gridSize = 16;
 
 function createGrid() {
   let col = 1;
-  console.log(gridSize);
   const grid = document.createElement('div');
   grid.setAttribute('id', 'grid');
   container.appendChild(grid);
 
   while (col <= gridSize) {
-    console.log(gridSize);
-    console.log(col);
     const colClass = document.createElement('div');
     colClass.classList.add(`col${col}`);
     grid.appendChild(colClass);
@@ -32,7 +29,7 @@ function createGrid() {
 chooseSizeButton.addEventListener('click', () => {
   gridSize = parseInt(
     prompt(
-      'Please choose how many columns you would like to create (choose between 1 and 100)'
+      'Please choose how many columns you wish to create (choose between 1 and 100)'
     )
   );
   if (gridSize > 100 || isNaN(gridSize)) {
@@ -48,17 +45,17 @@ function paintOnHover(square) {
 
 function toggleSwitch() {
   eraser.addEventListener('click', () => {
-    if (eraser.textContent === 'Eraser') {
+    if (eraser.textContent === 'Erase') {
       eraser.textContent = 'Paint';
     } else {
-      eraser.textContent = 'Eraser';
+      eraser.textContent = 'Erase';
     }
   });
 }
 
 function eraseOnHover(square) {
   eraser.addEventListener('click', () => {
-    if (eraser.textContent === 'Eraser') {
+    if (eraser.textContent === 'Erase') {
       square.addEventListener('mouseover', () =>
         square.classList.remove('active')
       );
