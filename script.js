@@ -3,19 +3,6 @@ const chooseSizeButton = document.querySelector('#choose-size');
 const eraser = document.querySelector('#eraser');
 let gridSize = 16;
 
-chooseSizeButton.addEventListener('click', () => {
-  gridSize = parseInt(
-    prompt(
-      'Please choose how many cols would you like to create (choose between 1 and 100)'
-    )
-  );
-  if (gridSize > 100) {
-    return;
-  }
-  grid.remove();
-  createGrid();
-});
-
 function createGrid() {
   let col = 1;
   console.log(gridSize);
@@ -25,6 +12,7 @@ function createGrid() {
 
   while (col <= gridSize) {
     console.log(gridSize);
+    console.log(col);
     const colClass = document.createElement('div');
     colClass.classList.add(`col${col}`);
     grid.appendChild(colClass);
@@ -35,24 +23,50 @@ function createGrid() {
       square.style.height = 40 / gridSize + 'em';
       colClass.appendChild(square);
       paintOnHover(square);
-      eraseElements(square);
+      eraseOnHover(square);
     }
     col++;
   }
 }
 
+chooseSizeButton.addEventListener('click', () => {
+  gridSize = parseInt(
+    prompt(
+      'Please choose how many columns you would like to create (choose between 1 and 100)'
+    )
+  );
+  if (gridSize > 100 || isNaN(gridSize)) {
+    return;
+  }
+  grid.remove();
+  createGrid();
+});
+
 function paintOnHover(square) {
   square.addEventListener('mouseover', () => square.classList.add('active'));
 }
 
-function eraseElements(square) {
-  eraser.addEventListener('click', () =>
-    square.addEventListener('mouseover', () =>
-      square.classList.contains('active')
-        ? square.classList.remove('active')
-        : none
-    )
-  );
+function toggleSwitch() {
+  eraser.addEventListener('click', () => {
+    if (eraser.textContent === 'Eraser') {
+      eraser.textContent = 'Paint';
+    } else {
+      eraser.textContent = 'Eraser';
+    }
+  });
+}
+
+function eraseOnHover(square) {
+  eraser.addEventListener('click', () => {
+    if (eraser.textContent === 'Eraser') {
+      square.addEventListener('mouseover', () =>
+        square.classList.remove('active')
+      );
+    } else {
+      paintOnHover(square);
+    }
+  });
 }
 
 createGrid();
+toggleSwitch();
